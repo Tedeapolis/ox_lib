@@ -66,6 +66,12 @@ const useStyles = createStyles((theme, params: { iconColor?: string }) => ({
     verticalAlign: 'middle',
     marginBottom: 3,
   },
+  buttonArrowContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 25,
+    height: 25,
+  },
 }));
 
 const ListItem = forwardRef<Array<HTMLDivElement | null>, Props>(({ item, index, scrollIndex, checked }, ref) => {
@@ -131,7 +137,14 @@ const ListItem = forwardRef<Array<HTMLDivElement | null>, Props>(({ item, index,
             />
           </Stack>
         ) : (
-          <Text>{item.label}</Text>
+          <Group position="apart" w="100%">
+            <Text>{item.label}</Text>
+            {(item.menu || item.arrow) && item.arrow !== false && (
+              <Stack className={classes.buttonArrowContainer}>
+                <LibIcon icon="chevron-right" fixedWidth />
+              </Stack>
+            )}
+          </Group>
         )}
       </Group>
     </Box>

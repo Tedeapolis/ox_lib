@@ -130,6 +130,11 @@ RegisterNUICallback('confirmSelected', function(data, cb)
         openMenu = nil
     end
 
+    if menu.options[data[1]].menu then
+        lib.showMenu(menu.options[data[1]].menu)
+        return
+    end
+
     if menu.cb then
         menu.cb(data[1], data[2], menu.options[data[1]].args, data[3])
     end
@@ -182,6 +187,7 @@ end)
 
 RegisterNUICallback('closeMenu', function(data, cb)
     cb(1)
+    print('Menu closed')
     lib.resetNuiFocus()
 
     local menu = openMenu

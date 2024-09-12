@@ -45,7 +45,7 @@ const AlertDialog: React.FC = () => {
         centered={dialogData.centered}
         size={dialogData.size || 'md'}
         overflow={dialogData.overflow ? 'inside' : 'outside'}
-        closeOnClickOutside={false}
+        closeOnClickOutside={true}
         onClose={() => {
           setOpened(false);
           closeAlert('cancel');

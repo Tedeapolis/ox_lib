@@ -40,6 +40,11 @@ function lib.raycast.fromCoords(coords, destination, flags, ignore)
     local handle = StartShapeTestLosProbe(coords.x, coords.y, coords.z, destination.x, destination.y,
         destination.z, flags or 511, cache.ped, ignore or 4)
 
+    if handle == 0 then
+        print("Failed to create shape test.")
+        return false
+    end
+
     while true do
         Wait(0)
         local retval, hit, endCoords, surfaceNormal, material, entityHit = GetShapeTestResultIncludingMaterial(handle)
