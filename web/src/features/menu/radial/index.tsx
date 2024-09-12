@@ -119,8 +119,30 @@ const RadialMenu: React.FC = () => {
     setMenuItems(items);
   }, [menu.items, menu.page]);
 
+  let mouseX = 0, mouseY = 0;
+  addEventListener('mousemove', (event: MouseEvent) => {
+    mouseX = event.clientX;
+    mouseY = event.clientY;
+  });
+
   useNuiEvent('openRadialMenu', async (data: { items: RadialMenuItem[]; sub?: boolean; option?: string } | false) => {
-    if (!data) return setVisible(false);
+    if (!data)
+    {
+      const elementUnderMouse = document.elementFromPoint(mouseX, mouseY);
+
+      // Optionally, you can check if there's an element to avoid errors
+      if (elementUnderMouse) {
+        // Simulate a click on the element
+        const clickEvent = new MouseEvent('click', {
+          bubbles: true, // so it will bubble up through the DOM
+          cancelable: true, // so the default action can be prevented
+          view: window // the window where the event occurred
+        });
+        
+        elementUnderMouse.dispatchEvent(clickEvent);
+      }
+      return setVisible(false);
+    }
     let initialPage = 1;
     if (data.option) {
       data.items.findIndex(
